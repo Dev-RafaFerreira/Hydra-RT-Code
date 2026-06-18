@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydra RT Code | Software Sob Medida, Automação e Soluções em IA</title>
+    <meta name="description" content="A Hydra RT Code desenvolve sites sob medida, sistemas, automações, agentes de IA, integrações e soluções digitais escaláveis para empresas modernas.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ==========================================================================
+           1. VARIÁVEIS E RESET
+           ========================================================================== */
+        :root {
+            /* Cores da Marca */
+            --navy: #1A237E;
+            --navy-hover: #151b60;
+            --navy-dark: #0d113c;
+            --gold: #DAA520;
+            --gold-hover: #b0851a;
+            
+            /* Tons de Cinza */
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            /* Tipografia */
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+            
+            /* Utilitários */
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--gray-600);
+            background-color: #ffffff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--navy);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ==========================================================================
+           2. CLASSES UTILITÁRIAS E LAYOUT BASE
+           ========================================================================== */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 96px 0;
+        }
+
+        .section-light { background-color: #ffffff; }
+        .section-gray { background-color: var(--gray-50); }
+        .section-dark { background-color: var(--navy); color: white; }
+
+        .text-center { text-align: center; }
+        
+        .section-header {
+            max-width: 768px;
+            margin: 0 auto 64px auto;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .section-dark .section-title { color: white; }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+        }
+        .section-dark .section-subtitle { color: var(--gray-300); }
+
+        /* Botões */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            gap: 8px;
+        }
+
+        .btn-navy {
+            background-color: var(--navy);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        .btn-navy:hover { background-color: var(--navy-hover); box-shadow: var(--shadow-lg); }
+
+        .btn-gold {
+            background-color: var(--gold);
+            color: var(--navy);
+            box-shadow: var(--shadow);
+        }
+        .btn-gold:hover { background-color: var(--gold-hover); box-shadow: var(--shadow-lg); }
+
+        .btn-outline {
+            background-color: transparent;
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        .btn-outline:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+        /* Grids Genéricos */
+        .grid { display: grid; gap: 32px; }
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(3, 1fr); }
+            .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* ==========================================================================
+           3. CABEÇALHO / HEADER
+           ========================================================================== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-100);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--navy);
+            cursor: pointer;
+        }
+        .logo .highlight { color: var(--gold); }
+        .logo-mobile { display: none; }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+        .nav-links a:hover { color: var(--navy); }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--navy);
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--gray-100);
+            box-shadow: var(--shadow);
+        }
+        .mobile-menu.active { display: block; }
+        .mobile-menu a {
+            display: block;
+            padding: 12px 16px;
+            text-align: center;
+            font-weight: 500;
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+        .mobile-menu a:hover { background-color: var(--gray-50); }
+        .mobile-menu .btn { width: 100%; margin-top: 16px; }
+
+        @media (max-width: 767px) {
+            .nav-links, .header-actions .btn { display: none; }
+            .menu-toggle { display: block; }
+            .logo-desktop { display: none; }
+            .logo-mobile { display: block; }
+        }
+
+        /* ==========================================================================
+           4. HERO SECTION
+           ========================================================================== */
+        .hero {
+            position: relative;
+            padding: 160px 0 100px 0;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(218, 165, 32, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .hero .container { position: relative; z-index: 1; }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: white;
+            margin-bottom: 24px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero h1 span { color: var(--gold); }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--gray-300);
+            font-weight: 300;
+            max-width: 768px;
+            margin: 0 auto 40px auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 64px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray-300);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .trust-badge svg { color: var(--gold); width: 20px; height: 20px; }
+
+        /* ==========================================================================
+           5. VALUE BAR
+           ========================================================================== */
+        .value-bar {
+            background-color: var(--gray-50);
+            padding: 32px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .value-grid { grid-template-columns: repeat(4, 1fr); }
+            .value-item:not(:last-child) { border-right: 1px solid var(--gray-200); }
+        }
+
+        .value-item {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .value-item svg { color: var(--navy); width: 24px; height: 24px; }
+        .value-item span { font-weight: 500; color: var(--gray-900); }
+
+        /* ==========================================================================
+           6. SERVICES SECTION
+           ========================================================================== */
+        .service-card {
+            background: white;
+            border: 1px solid var(--gray-100);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .service-card:hover {
+            border-color: rgba(218, 165, 32, 0.5);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .service-bg-shape {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(218, 165, 32, 0.05);
+            border-bottom-left-radius: 100%;
+            z-index: 0;
+            transition: var(--transition);
+        }
+        .service-card:hover .service-bg-shape { background-color: rgba(218, 165, 32, 0.1); }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(26, 35, 126, 0.05);
+            color: var(--navy);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+        .service-card:hover .service-icon { background-color: var(--navy); color: white; }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .service-card p {
+            font-size: 0.875rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==========================================================================
+           7. CONVERSION SECTION (Pain Points)
+           ========================================================================== */
+        .conversion-grid { align-items: center; }
+        
+        .conversion-content h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 24px;
+            color: white;
+        }
+        .conversion-content p {
+            font-size: 1.125rem;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .pain-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .pain-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pain-card .bad { display: flex; align-items: center; gap: 12px; color: var(--gray-300); }
+        .pain-card .bad svg { color: #f87171; }
+        
+        .pain-card .arrow { color: var(--gray-500); }
+
+        .pain-card .good { display: flex; align-items: center; gap: 12px; color: white; font-weight: 500; }
+        .pain-card .good svg { color: #4ade80; }
+
+        @media (max-width: 767px) {
+            .pain-card { flex-direction: column; gap: 16px; text-align: center; }
+            .pain-card .arrow { transform: rotate(90deg); }
+        }
+
+        /* ==========================================================================
+           8. SOLUTIONS BY NEED
+           ========================================================================== */
+        .solution-card {
+            background: white;
+            border: 1px solid var(--gray-100);
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .solution-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .solution-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-blue { background: #eff6ff; color: #2563eb; }
+        .icon-indigo { background: #eef2ff; color: #4f46e5; }
+        .icon-emerald { background: #ecfdf5; color: #059669; }
+        .icon-purple { background: #f5f3ff; color: #7c3aed; }
+
+        .solution-card h3 { font-size: 1.25rem; color: var(--navy); }
+
+        .solution-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        .solution-list li svg { color: var(--gold); width: 16px; height: 16px; flex-shrink: 0; }
+
+        /* ==========================================================================
+           9. PROCESS SECTION
+           ========================================================================== */
+        .process-container { position: relative; }
+        
+        .process-line {
+            display: none;
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gray-100);
+            z-index: 0;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            position: relative;
+            z-index: 1;
+        }
+        @media (min-width: 1024px) {
+            .process-line { display: block; }
+            .process-grid { grid-template-columns: repeat(5, 1fr); gap: 24px; }
+        }
+
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+        .process-step:hover .step-number { transform: scale(1.1); }
+        .process-step:last-child .step-number { background-color: var(--gold); color: var(--navy); }
+
+        .process-step h3 { font-size: 1.125rem; margin-bottom: 8px; }
+        .process-step p { font-size: 0.875rem; color: var(--gray-600); }
+
+        /* ==========================================================================
+           10. PORTFOLIO
+           ========================================================================== */
+        .portfolio-card {
+            background: white;
+            border: 1px solid var(--gray-100);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .portfolio-card:hover { box-shadow: var(--shadow); }
+
+        .portfolio-img {
+            height: 192px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .portfolio-img svg { width: 96px; height: 96px; color: rgba(255,255,255,0.2); }
+        .bg-p1 { background: linear-gradient(to bottom right, var(--navy), #312e81); }
+        .bg-p2 { background: linear-gradient(to bottom right, #1f2937, #111827); }
+        .bg-p3 { background: linear-gradient(to bottom right, #2563eb, #4f46e5); }
+
+        .portfolio-content {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .portfolio-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-card h3 { font-size: 1.25rem; margin-bottom: 12px; }
+        .portfolio-card p { font-size: 0.875rem; margin-bottom: 24px; flex-grow: 1; }
+
+        .tech-stack-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+        .tech-stack-tags span {
+            background-color: var(--gray-100);
+            color: var(--gray-600);
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .btn-card {
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            font-family: var(--font-body);
+            color: var(--gold);
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-card:hover { background-color: var(--gray-50); }
+
+        /* ==========================================================================
+           11. ABOUT & WHY US
+           ========================================================================== */
+        .about-grid { align-items: center; }
+        
+        .about-text h2 { font-size: clamp(1.875rem, 3vw, 2.25rem); margin-bottom: 24px; text-align: center;}
+        .about-text p { font-size: 1.125rem; margin-bottom: 24px; text-align: center;}
+
+        .about-brand-box {
+            background-color: var(--gray-50);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--gray-100);
+        }
+        .about-brand-box li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .about-brand-box li:last-child { margin-bottom: 0; }
+        .about-brand-box strong { color: var(--navy); display: block; margin-top: 2px; }
+        .about-brand-box span { font-size: 0.875rem; }
+
+        .why-us h3 { font-size: 1.5rem; margin-bottom: 32px; }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 640px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .feature-card {
+            padding: 16px;
+            border: 1px solid var(--gray-100);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        .feature-card:hover { border-color: var(--gold); }
+        .feature-card svg { color: var(--gold); width: 20px; height: 20px; flex-shrink: 0; }
+        .feature-card span { font-size: 0.875rem; font-weight: 500; color: var(--gray-800); }
+
+        /* ==========================================================================
+           12. TECH STACK
+           ========================================================================== */
+        .tech-section {
+            padding: 64px 0;
+            background-color: var(--navy);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .tech-section h2 { color: white; font-size: 1.5rem; margin-bottom: 32px; font-weight: 600; }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            max-width: 896px;
+            margin: 0 auto;
+        }
+        
+        .tech-tag {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--gray-300);
+            font-size: 0.875rem;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ==========================================================================
+           13. TESTIMONIALS
+           ========================================================================== */
+        .testimonial-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--gray-100);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stars { display: flex; gap: 4px; color: var(--gold); margin-bottom: 16px; }
+        .stars svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .testimonial-card p { font-style: italic; margin-bottom: 24px; }
+
+        .client-info { display: flex; align-items: center; gap: 12px; }
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--gray-200);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--gray-500);
+        }
+        .client-details h4 { font-size: 0.875rem; margin-bottom: 2px; }
+        .client-details span { font-size: 0.75rem; color: var(--gray-500); }
+
+        /* ==========================================================================
+           14. FAQ
+           ========================================================================== */
+        .faq-wrapper {
+            max-width: 768px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background-color: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .faq-summary {
+            padding: 24px;
+            font-weight: 600;
+            color: var(--gray-900);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        
+        .faq-icon {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        .faq-icon svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            transition: opacity 0.3s ease;
+        }
+        .faq-icon-minus { opacity: 0; }
+        .faq-item[open] .faq-icon-plus { opacity: 0; }
+        .faq-item[open] .faq-icon-minus { opacity: 1; }
+
+        .faq-content {
+            padding: 0 24px 24px 24px;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* ==========================================================================
+           15. FINAL CTA
+           ========================================================================== */
+        .cta-section {
+            padding: 96px 0;
+            background-color: var(--navy);
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+        .cta-section .hero-pattern { opacity: 0.3; }
+        .cta-section .container { position: relative; z-index: 1; max-width: 896px; }
+        
+        .cta-section h2 { color: white; font-size: clamp(1.875rem, 4vw, 3rem); margin-bottom: 24px; }
+        .cta-section p { color: var(--gray-300); font-size: 1.125rem; font-weight: 300; margin-bottom: 40px; }
+
+        .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+        /* ==========================================================================
+           16. CONTACT SECTION
+           ========================================================================== */
+        .contact-form-box {
+            background-color: var(--navy);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            border: 1px solid var(--gray-100);
+            box-shadow: var(--shadow-sm);
+        }
+        .contact-form-box h2 { font-size: 2rem; color: var(--gold); margin-bottom: 24px; text-align: center;}
+        .contact-form-box p { color: var(--gray-300); font-size: 1.125rem; font-weight: 300; text-align: center;}
+
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+        @media (min-width: 640px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .contact-info { display: flex; flex-direction: column; justify-content: center; }
+        .contact-info h3 { font-size: 1.875rem; color: var(--navy); margin-bottom: 32px; }
+        
+        .contact-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(26, 35, 126, 0.05);
+            color: var(--navy);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .contact-item h4 { font-size: 1.125rem; margin-bottom: 4px; }
+        .contact-item a, .contact-item p { color: var(--gray-600); }
+        .contact-item a:hover { color: var(--gold); }
+
+        /* ==========================================================================
+           17. FOOTER
+           ========================================================================== */
+        .footer {
+            background-color: #111827; /* Tailwind bg-gray-900 equivalent for darker footer */
+            color: var(--gray-300);
+            padding: 48px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+
+        .footer-brand { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 16px; }
+        .footer-brand span { color: var(--gold); }
+        .footer-desc { font-size: 0.875rem; color: #9ca3af; line-height: 1.6; }
+
+        .footer-col h4 {
+            color: white;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+        .footer-col ul { display: flex; flex-direction: column; gap: 8px; }
+        .footer-col a { font-size: 0.875rem; color: var(--gray-300); }
+        .footer-col a:hover { color: var(--gold); }
+        
+        .footer-contact li { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; margin-bottom: 12px;}
+        .footer-contact svg { color: var(--gold); width: 16px; height: 16px; }
+        .social-links { display: flex; gap: 16px; margin-top: 16px; }
+        .social-links a { color: #9ca3af; }
+        .social-links a:hover { color: white; }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+        @media (min-width: 768px) { .footer-bottom { flex-direction: row; } }
+        .footer-sig { font-family: var(--font-heading); font-weight: 700; letter-spacing: 0.1em; margin-top: 8px;}
+        @media (min-width: 768px) { .footer-sig { margin-top: 0; } }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. Header / Navigation -->
+    <header class="header">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo logo-desktop" onclick="window.scrollTo(0,0)">
+                Hydra <span class="highlight">RT</span> Code
+            </div>
+            <div class="logo logo-mobile" onclick="window.scrollTo(0,0)">
+                H<span class="highlight">R</span>C
+            </div>
+            
+            <!-- Desktop Nav -->
+            <nav class="nav-links">
+                <a href="#home">Início</a>
+                <a href="#services">Serviços</a>
+                <a href="#solutions">Soluções</a>
+                <a href="#process">Processo</a>
+                <a href="#portfolio">Portfólio</a>
+                <a href="#about">Sobre</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="header-actions">
+                <a href="#contact" class="btn btn-navy">Solicitar Proposta</a>
+                <button class="menu-toggle" id="mobile-menu-btn">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#home">Início</a>
+            <a href="#services">Serviços</a>
+            <a href="#solutions">Soluções</a>
+            <a href="#process">Processo</a>
+            <a href="#portfolio">Portfólio</a>
+            <a href="#about">Sobre</a>
+            <a href="#contact" class="btn btn-navy">Solicitar Proposta</a>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-pattern"></div>
+        <div class="container">
+            <h1>Crie sistemas mais inteligentes, automatize fluxos de trabalho e escale sua empresa com <span>tecnologia sob medida.</span></h1>
+            <p>A Hydra RT Code desenvolve sites, sistemas, automações, integrações e soluções baseadas em IA que ajudam empresas a economizar tempo, reduzir o trabalho manual e operar com mais inteligência.</p>
+            
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-gold">Solicitar Proposta</a>
+                <a href="#services" class="btn btn-outline">Explorar Serviços</a>
+            </div>
+            
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <i data-lucide="code-2"></i> Desenvolvimento Sob Medida
+                </div>
+                <div class="trust-badge">
+                    <i data-lucide="bot"></i> IA e Automação
+                </div>
+                <div class="trust-badge">
+                    <i data-lucide="layers"></i> Sistemas Escaláveis
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Trust / Value Bar -->
+    <section class="value-bar">
+        <div class="container value-grid">
+            <div class="value-item">
+                <i data-lucide="zap"></i>
+                <span>Fluxos mais rápidos</span>
+            </div>
+            <div class="value-item">
+                <i data-lucide="brain-circuit"></i>
+                <span>Operações inteligentes</span>
+            </div>
+            <div class="value-item">
+                <i data-lucide="blocks"></i>
+                <span>Sistemas sob medida</span>
+            </div>
+            <div class="value-item">
+                <i data-lucide="trending-up"></i>
+                <span>Soluções escaláveis</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Services Section -->
+    <section id="services" class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Soluções tecnológicas construídas para o seu negócio.</h2>
+                <p class="section-subtitle">De sites a automações inteligentes, a Hydra RT Code cria soluções digitais que conectam suas ferramentas, simplificam operações e melhoram o desempenho.</p>
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="service-card">
+                    <div class="service-bg-shape"></div>
+                    <div class="service-icon"><i data-lucide="monitor-smartphone"></i></div>
+                    <h3>Desenvolvimento de Sites</h3>
+                    <p>Sites de alta performance desenhados para converter visitantes em clientes, com design responsivo, forte UX, estrutura de SEO e branding profissional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-bg-shape"></div>
+                    <div class="service-icon"><i data-lucide="layout-dashboard"></i></div>
+                    <h3>Sistemas & Web Apps</h3>
+                    <p>Plataformas feitas sob medida, dashboards, portais, ferramentas internas e sistemas de gestão construídos de acordo com as regras do seu negócio.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-bg-shape"></div>
+                    <div class="service-icon"><i data-lucide="workflow"></i></div>
+                    <h3>Automação de Processos</h3>
+                    <p>Automações que reduzem tarefas repetitivas, conectam departamentos, acionam ações, processam dados e economizam tempo operacional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-bg-shape"></div>
+                    <div class="service-icon"><i data-lucide="cpu"></i></div>
+                    <h3>Agentes e Assistentes de IA</h3>
+                    <p>Assistentes movidos a IA para suporte, vendas, operações internas, atendimento ao cliente, consulta de dados e fluxos de negócios.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-bg-shape"></div>
+                    <div class="service-icon"><i data-lucide="network"></i></div>
+                    <h3>Integrações de API</h3>
+                    <p>Conecte CRMs, ERPs, sistemas de pagamento, plataformas de agendamento, banco de dados, ferramentas de comunicação e serviços de terceiros.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-bg-shape"></div>
+                    <div class="service-icon"><i data-lucide="bar-chart-3"></i></div>
+                    <h3>Dados e Dashboards</h3>
+                    <p>Transforme os dados do seu negócio em painéis claros, relatórios e ferramentas de tomada de decisão em tempo real.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Main Conversion Section -->
+    <section class="section section-dark">
+        <div class="container grid grid-2 conversion-grid">
+            <div class="conversion-content">
+                <h2>Sua empresa não deve depender de trabalho manual para sempre.</h2>
+                <p>Muitas empresas perdem tempo todos os dias com tarefas repetitivas, ferramentas desconectadas, planilhas manuais, processos lentos e sistemas que não se comunicam. A Hydra RT Code constrói tecnologia que transforma a complexidade em fluxos de trabalho claros, automatizados e escaláveis.</p>
+                <a href="#contact" class="btn btn-gold">
+                    Inicie sua transformação digital <i data-lucide="arrow-right" style="width:16px; height:16px;"></i>
+                </a>
+            </div>
+            
+            <div class="pain-list">
+                <div class="pain-card">
+                    <div class="bad"><i data-lucide="x-circle"></i> Processos manuais</div>
+                    <i data-lucide="arrow-right" class="arrow"></i>
+                    <div class="good"><i data-lucide="check-circle-2"></i> Fluxos automatizados</div>
+                </div>
+                <div class="pain-card">
+                    <div class="bad"><i data-lucide="x-circle"></i> Ferramentas desconectadas</div>
+                    <i data-lucide="arrow-right" class="arrow"></i>
+                    <div class="good"><i data-lucide="check-circle-2"></i> Sistemas integrados</div>
+                </div>
+                <div class="pain-card">
+                    <div class="bad"><i data-lucide="x-circle"></i> Operações lentas</div>
+                    <i data-lucide="arrow-right" class="arrow"></i>
+                    <div class="good"><i data-lucide="check-circle-2"></i> Execução rápida</div>
+                </div>
+                <div class="pain-card">
+                    <div class="bad"><i data-lucide="x-circle"></i> Dados confusos</div>
+                    <i data-lucide="arrow-right" class="arrow"></i>
+                    <div class="good"><i data-lucide="check-circle-2"></i> Dashboards inteligentes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Solutions by Business Need -->
+    <section id="solutions" class="section section-gray">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Soluções para diferentes estágios do seu negócio.</h2>
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="solution-card">
+                    <div class="solution-header">
+                        <div class="solution-icon icon-blue"><i data-lucide="users"></i></div>
+                        <h3>Para empresas que precisam de clientes</h3>
+                    </div>
+                    <ul class="solution-list">
+                        <li><i data-lucide="check"></i> Landing pages</li>
+                        <li><i data-lucide="check"></i> Sites institucionais</li>
+                        <li><i data-lucide="check"></i> Funis de vendas</li>
+                        <li><i data-lucide="check"></i> Captura de leads</li>
+                        <li><i data-lucide="check"></i> Otimização de conversão</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-header">
+                        <div class="solution-icon icon-indigo"><i data-lucide="folders"></i></div>
+                        <h3>Para empresas que precisam de organização</h3>
+                    </div>
+                    <ul class="solution-list">
+                        <li><i data-lucide="check"></i> Sistemas de gestão</li>
+                        <li><i data-lucide="check"></i> Dashboards</li>
+                        <li><i data-lucide="check"></i> Portais internos</li>
+                        <li><i data-lucide="check"></i> Sistemas de estoque</li>
+                        <li><i data-lucide="check"></i> Banco de dados de clientes</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-header">
+                        <div class="solution-icon icon-emerald"><i data-lucide="repeat"></i></div>
+                        <h3>Para empresas que precisam de automação</h3>
+                    </div>
+                    <ul class="solution-list">
+                        <li><i data-lucide="check"></i> Fluxos no n8n</li>
+                        <li><i data-lucide="check"></i> Automação de CRM</li>
+                        <li><i data-lucide="check"></i> Automação de WhatsApp</li>
+                        <li><i data-lucide="check"></i> Automação de E-mail</li>
+                        <li><i data-lucide="check"></i> Tarefas acionadas por API</li>
+                    </ul>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-header">
+                        <div class="solution-icon icon-purple"><i data-lucide="sparkles"></i></div>
+                        <h3>Para empresas que precisam de inteligência</h3>
+                    </div>
+                    <ul class="solution-list">
+                        <li><i data-lucide="check"></i> Agentes de suporte de IA</li>
+                        <li><i data-lucide="check"></i> Assistentes de vendas de IA</li>
+                        <li><i data-lucide="check"></i> Bots de base de conhecimento</li>
+                        <li><i data-lucide="check"></i> Agentes de consulta de dados</li>
+                        <li><i data-lucide="check"></i> Fluxos de recomendação inteligentes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Process Section -->
+    <section id="process" class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Um processo claro da ideia ao lançamento.</h2>
+            </div>
+            
+            <div class="process-container">
+                <div class="process-line"></div>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Descoberta</h3>
+                        <p>Entendemos seu negócio, objetivos, gargalos, ferramentas e oportunidades.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Estratégia</h3>
+                        <p>Definimos a melhor estrutura técnica, recursos, integrações e jornada do usuário.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Design</h3>
+                        <p>Criamos uma interface limpa, profissional e focada em conversão.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3>Desenvolvimento</h3>
+                        <p>Construímos a solução utilizando tecnologias escaláveis, confiáveis e modernas.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <h3>Lançamento</h3>
+                        <p>Implementamos, testamos, refinamos e oferecemos suporte contínuo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Portfolio Section -->
+    <section id="portfolio" class="section section-gray">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Projetos selecionados e soluções digitais.</h2>
+            </div>
+            
+            <div class="grid grid-3">
+                <!-- Case 1 -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img bg-p1"><i data-lucide="bot"></i></div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Automação com IA / Integrações</div>
+                        <h3>Sistema de Automação para Hospitalidade</h3>
+                        <p>Uma estrutura de automação inteligente projetada para dar suporte à comunicação com hóspedes, dados de propriedades e fluxos operacionais.</p>
+                        <div class="tech-stack-tags">
+                            <span>n8n</span> <span>OpenAI API</span> <span>WhatsApp API</span>
+                        </div>
+                        <button class="btn-card">Em breve...</button>
+                    </div>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img bg-p2"><i data-lucide="database"></i></div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Sistema Sob Medida</div>
+                        <h3>Plataforma de Gestão de Estoque</h3>
+                        <p>Uma solução web para gestão de estoque projetada para pequenos negócios, lojas de assistência técnica e varejistas locais.</p>
+                        <div class="tech-stack-tags">
+                            <span>Next.js</span> <span>Node.js</span> <span>PostgreSQL</span>
+                        </div>
+                        <button class="btn-card">Em breve...</button>
+                    </div>
+                </div>
+
+                <!-- Case 3 -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img bg-p3"><i data-lucide="layout"></i></div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Desenvolvimento de Sites</div>
+                        <h3>Site Corporativo de Alta Conversão</h3>
+                        <p>Um site premium responsivo construído para melhorar a autoridade da marca, geração de leads e confiança dos clientes.</p>
+                        <div class="tech-stack-tags">
+                            <span>HTML 5</span> <span>CSS 3</span> <span>JavaScript</span>
+                        </div>
+                        <button class="btn-card">Em breve...</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9 & 10. About & Why Choose Us -->
+    <section id="about" class="section section-light">
+        <div class="container grid about-grid">
+            <div class="about-text">
+                <h2>Construído com estratégia, código e execução inteligente.</h2>
+                <p>A Hydra RT Code é uma empresa de desenvolvimento focada em criar soluções digitais práticas, elegantes e escaláveis. A empresa combina desenvolvimento de software, automação, inteligência artificial e pensamento focado em processos de negócios para ajudar empresas a operar com mais velocidade, clareza e eficiência.</p>
+
+            </div>
+
+            <div class="why-us">
+                <h3>Por que as empresas escolhem a Hydra RT Code.</h3>
+                <div class="features-grid">
+                    <div class="feature-card"><i data-lucide="briefcase"></i> <span>Pensamento focado em negócios</span></div>
+                    <div class="feature-card"><i data-lucide="settings"></i> <span>Soluções sob medida, não templates</span></div>
+                    <div class="feature-card"><i data-lucide="code"></i> <span>Desenvolvimento limpo e escalável</span></div>
+                    <div class="feature-card"><i data-lucide="zap"></i> <span>Mentalidade focada em automação</span></div>
+                    <div class="feature-card"><i data-lucide="brain"></i> <span>Capacidades modernas de IA</span></div>
+                    <div class="feature-card"><i data-lucide="message-square"></i> <span>Comunicação clara e entrega garantida</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. Technology Stack -->
+    <section class="tech-section">
+        <div class="container">
+            <h2>Ferramentas modernas para empresas modernas.</h2>
+            <div class="tech-tags">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">SQL Server</span>
+                <span class="tech-tag">Redis</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">n8n</span>
+                <span class="tech-tag">APIs</span>
+                <span class="tech-tag">OpenAI / Gemini</span>
+                <span class="tech-tag">Firebase</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. Testimonials -->
+    <section class="section section-gray">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">O que nossos clientes dizem.</h2>
+            </div>
+            <div class="grid grid-3">
+                <div class="testimonial-card">
+                    <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+                    <p>"A Hydra RT Code nos ajudou a reduzir o trabalho manual e organizar nosso processo interno com um sistema que realmente se ajusta à nossa operação."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">C</div>
+                        <div class="client-details">
+                            <h4>Gerente de Operações</h4>
+                            <span>Cliente de Varejo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+                    <p>"Profissional, claro e estratégico. A solução final ficou excelente e resolveu problemas reais do negócio."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">D</div>
+                        <div class="client-details">
+                            <h4>Fundador</h4>
+                            <span>Agência de Serviços</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+                    <p>"A automação economizou horas de trabalho repetitivo e tornou nossa equipe muito mais rápida."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">L</div>
+                        <div class="client-details">
+                            <h4>Diretor</h4>
+                            <span>Grupo Imobiliário</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13. FAQ Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perguntas Frequentes</h2>
+            </div>
+            
+            <div class="faq-wrapper">
+                <details class="faq-item">
+                    <summary class="faq-summary">
+                        O que a Hydra RT Code desenvolve?
+                        <div class="faq-icon">
+                            <i data-lucide="plus" class="faq-icon-plus"></i>
+                            <i data-lucide="minus" class="faq-icon-minus"></i>
+                        </div>
+                    </summary>
+                    <div class="faq-content">A Hydra RT Code desenvolve sites, sistemas sob medida, automações, agentes de IA, integrações, dashboards e soluções digitais para empresas.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-summary">
+                        Vocês trabalham com pequenas empresas?
+                        <div class="faq-icon">
+                            <i data-lucide="plus" class="faq-icon-plus"></i>
+                            <i data-lucide="minus" class="faq-icon-minus"></i>
+                        </div>
+                    </summary>
+                    <div class="faq-content">Sim. As soluções podem ser adaptadas para pequenas empresas, prestadores de serviços, empresas locais, startups e operações em crescimento.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-summary">
+                        Vocês podem automatizar meu processo atual?
+                        <div class="faq-icon">
+                            <i data-lucide="plus" class="faq-icon-plus"></i>
+                            <i data-lucide="minus" class="faq-icon-minus"></i>
+                        </div>
+                    </summary>
+                    <div class="faq-content">Sim. A Hydra RT Code pode analisar seu fluxo de trabalho atual, identificar tarefas repetitivas e criar automações que conectam suas ferramentas e reduzem o trabalho manual.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-summary">
+                        Preciso saber exatamente qual sistema eu quero?
+                        <div class="faq-icon">
+                            <i data-lucide="plus" class="faq-icon-plus"></i>
+                            <i data-lucide="minus" class="faq-icon-minus"></i>
+                        </div>
+                    </summary>
+                    <div class="faq-content">Não. O processo começa entendendo as necessidades do seu negócio e, em seguida, definindo a melhor solução técnica.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-summary">
+                        Vocês podem integrar com as ferramentas que eu já uso?
+                        <div class="faq-icon">
+                            <i data-lucide="plus" class="faq-icon-plus"></i>
+                            <i data-lucide="minus" class="faq-icon-minus"></i>
+                        </div>
+                    </summary>
+                    <div class="faq-content">Sim. A Hydra RT Code pode integrar APIs, CRMs, bancos de dados, plataformas de agendamento, planilhas, ferramentas de comunicação e outros sistemas quando tecnicamente possível.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-summary">
+                        Como solicito uma proposta?
+                        <div class="faq-icon">
+                            <i data-lucide="plus" class="faq-icon-plus"></i>
+                            <i data-lucide="minus" class="faq-icon-minus"></i>
+                        </div>
+                    </summary>
+                    <div class="faq-content">Use o formulário de contato e descreva seu negócio, objetivos e o que deseja melhorar. A Hydra RT Code avaliará o melhor caminho para a solução.</div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- 14. Final CTA Section -->
+    <section class="cta-section">
+        <div class="hero-pattern"></div>
+        <div class="container">
+            <h2>Pronto para construir uma operação digital mais inteligente?</h2>
+            <p>Conte-nos o que você deseja criar, automatizar ou melhorar. A Hydra RT Code ajudará a transformar sua ideia em uma solução clara, funcional e escalável.</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-gold">Solicitar Proposta</a>
+                <a href="https://wa.me/5511926915691?text=Ol%C3%A1%2C%20Hydra!%0A%0AVim%20pelo%20seu%20site%20e%20gostaria%20de%20alavancar%20minha%20empresa!" class="btn btn-outline"><i data-lucide="message-circle" style="width:18px;height:18px;"></i> Contato via WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 15. Contact Section -->
+    <section id="contact" class="section section-light">
+        <div class="container grid grid-2">
+            <!-- Form -->
+            <div class="contact-form-box">
+                <h2><i>"Tecnologia de alto nível para empresas que querem crescer!"</i></h2>
+                <p><i>A oportunidade que sua empresa precisa para alcançar o próximo nível.</i></p>    
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h3>Entre em contato</h3>
+                <div class="contact-item">
+                    <div class="contact-icon"><i data-lucide="mail"></i></div>
+                    <div>
+                        <h4>E-mail</h4>
+                        <a href="mailto:contact@hydrartcode.com">contact.hydrartcode@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i data-lucide="phone"></i></div>
+                    <div>
+                        <h4>WhatsApp</h4>
+                        <a href="https://wa.me/5511926915691?text=Ol%C3%A1%2C%20Hydra!%0A%0AVim%20pelo%20seu%20site%20e%20gostaria%20de%20alavancar%20minha%20empresa!">+55 (11) 9 2691-5691</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+                    <div>
+                        <h4>Localização</h4>
+                        <p>Brasil / Serviços remotos em todo o mundo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 16. Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div>
+                    <div class="footer-brand">Hydra <span>RT</span> Code</div>
+                    <p class="footer-desc">Software sob medida, automações, agentes de IA, integrações e soluções digitais de alta conversão.</p>
+                </div>
+
+                <!-- Navigation -->
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#services">Serviços</a></li>
+                        <li><a href="#solutions">Soluções</a></li>
+                        <li><a href="#process">Processo</a></li>
+                        <li><a href="#portfolio">Portfólio</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="footer-col">
+                    <h4>Serviços</h4>
+                    <ul>
+                        <li><a href="#services">Sites</a></li>
+                        <li><a href="#services">Sistemas Sob Medida</a></li>
+                        <li><a href="#services">Automação</a></li>
+                        <li><a href="#services">Agentes de IA</a></li>
+                        <li><a href="#services">Integrações de API</a></li>
+                        <li><a href="#services">Dashboards</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-col footer-contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><i data-lucide="mail"></i> <a href="mailto:contact.hydrartcode@gmail.com">contact.hydrartcode@gmail.com</a></li>
+                        <li><i data-lucide="message-circle"></i> <a href="https://wa.me/5511926915691?text=Ol%C3%A1%2C%20Hydra!%0A%0AVim%20pelo%20seu%20site%20e%20gostaria%20de%20alavancar%20minha%20empresa!">WhatsApp (11) 92691-5691</a></li>
+                        <li><i data-lucide="building-2"></i><a href="#">LinkedIn</a></li>
+                        <li><i data-lucide="camera"></i><a href="#">Instagram</a></li>
+                    </ul>
+ 
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Hydra RT Code. Todos os direitos reservados.</p>
+                <div class="footer-sig">HRC</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Inicializar ícones do Lucide
+        lucide.createIcons();
+
+        // Lógica do Menu Mobile
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        const links = menu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
