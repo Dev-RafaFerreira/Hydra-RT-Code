@@ -14,6 +14,11 @@
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!--FA Font Awesome -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
 
     <style>
         /* ==========================================================================
@@ -897,6 +902,41 @@
         .footer-sig { font-family: var(--font-heading); font-weight: 700; letter-spacing: 0.1em; margin-top: 8px;}
         @media (min-width: 768px) { .footer-sig { margin-top: 0; } }
 
+
+        .float-WhatsApp{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #059669;
+            width: 65px;
+            height: 65px;
+            bottom: 20px;
+            right: 20px;
+            position: fixed;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,.2);
+            
+        }
+
+        .float-WhatsApp:hover {
+            transform: scale(1.15);
+            box-shadow: 0 8px 20px rgba(0,0,0,.35);
+        }
+
+        .a{
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .i{
+        margin-right: 8px;
+        font-size: 20px;
+        vertical-align: middle;
+        transform: scale(1.1);
+
+        }
+    
     </style>
 </head>
 <body>
@@ -1434,7 +1474,7 @@
                     <div class="contact-icon"><i data-lucide="phone"></i></div>
                     <div>
                         <h4>WhatsApp</h4>
-                        <a href="https://wa.me/5511926915691?text=Ol%C3%A1%2C%20Hydra!%0A%0AVim%20pelo%20seu%20site%20e%20gostaria%20de%20alavancar%20minha%20empresa!">+55 (11) 9 2691-5691</a>
+                        <a href="https://wa.me/5511926915691?text=Ol%C3%A1%2C%20Hydra!%0A%0AVim%20pelo%20seu%20site%20e%20gostaria%20de%20alavancar%20minha%20empresa!" >+55 (11) 9 2691-5691  </a> 
                     </div>
                 </div>
                 <div class="contact-item">
@@ -1503,6 +1543,8 @@
             </div>
         </div>
     </footer>
+
+    <a class="float-WhatsApp" href="https://wa.me/5511926915691?text=Ol%C3%A1%2C%20Hydra!%0A%0AVim%20pelo%20seu%20site%20e%20gostaria%20de%20alavancar%20minha%20empresa!" target="_blank"> <i class="fa-brands fa-whatsapp fa-2x" style="font-size: 40px; color: rgba(255, 255, 255, 0.95); "></i> </a>
 
     <!-- Scripts -->
     <script>
